@@ -6,32 +6,44 @@
 <h1>Andreas Bank</h1>
 <hr />
 <h3>Kunder och konton</h3>
-<dl>
-    @foreach (var customer in Model)
-    {
-        <dt>@customer.Name's konton</dt>
-        <dd>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Saldo</th>
-                        <th>Kredit</th>
-                        <th>Disponibelt</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var account in customer.Accounts)
-                    {
-                        <tr>
-                            <td>@account.Id</td>
-                            <td>@account.Balance.ToString("C")</td>
-                            <td>@account.Credit.ToString("C")</td>
-                            <td>@((account.Balance + account.Credit).ToString("C"))</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </dd>
-    }
-</dl>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Kundid</th>
+            <th>Namn</th>
+            <th>Konton</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.Id</td>
+                <td>@customer.Name</td>
+                <td>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Kontonummer</th>
+                                <th>Saldo</th>
+                                <th>Kredit</th>
+                                <th>Disponibelt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var account in customer.Accounts)
+                            {
+                                <tr>
+                                    <td>@account.Id</td>
+                                    <td>@account.Balance.ToString("C")</td>
+                                    <td>@account.Credit.ToString("C")</td>
+                                    <td>@((account.Balance + account.Credit).ToString("C"))</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
