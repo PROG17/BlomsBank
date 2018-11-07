@@ -1,18 +1,26 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AndreasBank.Models;
+using AndreasBank.Repositories;
 
 namespace AndreasBank.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IBankRepository _bankRepository;
+
+        public HomeController(IBankRepository bankRepo)
+        {
+            _bankRepository = bankRepo;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            return View(_bankRepository.Customers);
         }
 
         public IActionResult About()
