@@ -1,3 +1,4 @@
+using AndreasBank.Exceptions;
 using AndreasBank.Models;
 using System;
 using System.Collections.Generic;
@@ -8,18 +9,36 @@ namespace AndreasBank.Repositories
 {
     public class BankRepository : IBankRepository
     {
+        public BankRepository(List<Customer> customers)
+        {
+            Customers = customers.AsQueryable();
+        }
 
-        public IQueryable<Customer> Customers
-            => GetTestCustomers().AsQueryable();
+        public BankRepository()
+        {
+            Customers = GetTestCustomers().AsQueryable();
+        }
+
+        public IQueryable<Customer> Customers { get; private set; }
         public IQueryable<Account> Accounts
             => Customers.SelectMany(c => c.Accounts);
 
-        public bool SaveCustomer()
+        public Account GetAccountById(int id)
+        {
+            return Accounts.FirstOrDefault(a => a.Id == id);
+        }
+
+        public Customer GetCustomerById(int id)
+        {
+            return Customers.FirstOrDefault(a => a.Id == id);
+        }
+
+        public bool SaveCustomer(Customer customer)
         {
             return true;
         }
 
-        public bool SaveAccount()
+        public bool SaveAccount(Account account)
         {
             return true;
         }

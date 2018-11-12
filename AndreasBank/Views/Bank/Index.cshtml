@@ -1,0 +1,33 @@
+@model IndexViewModel
+<br />
+<form method="post">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <div class="form-group">
+                <label asp-for="AccountId"></label>
+                <input class="form-control" asp-for="AccountId" />
+                <span class="text-danger" asp-validation-for="AccountId"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount"></label>
+                <input class="form-control" asp-for="Amount" />
+                <span class="text-danger" asp-validation-for="Amount"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActualSumString"></label>
+                <input asp-for="ActualSumString" id="input-actual-sum" type="hidden" value="@Model.ActualSumString" />
+                <p id="actual-sum" class="form-control form-control-static">@Model.ActualSumString</p>
+                <span id="actual-sum-validation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Insättning" formaction="/bank/deposit" />
+                <input class="btn btn-primary" type="submit" value="Uttag" formaction="/bank/withdraw" />
+            </div>
+            @*<div class="form-group">
+                <label asp-for="ResultSumString"></label>
+                <p id="result-sum" class="form-control form-control-static">@Model.ResultSumString</p>
+            </div>*@
+        </div>
+    </div>
+</form>
+
