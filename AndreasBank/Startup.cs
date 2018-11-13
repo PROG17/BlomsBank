@@ -36,7 +36,12 @@ namespace AndreasBank
             services.AddSingleton<IBankRepository, BankRepository>();
             services.AddTransient<IBankService, BankService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor(
+                (x, y) => $"Värdet {x} är inte giltigt för {y}");
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
