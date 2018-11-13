@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using AndreasBank.Models;
 
 namespace AndreasBank.Repositories
@@ -8,7 +8,10 @@ namespace AndreasBank.Repositories
         IQueryable<Account> Accounts { get; }
         IQueryable<Customer> Customers { get; }
 
-        bool SaveAccount();
-        bool SaveCustomer();
+        Account GetAccountById(int id);
+        Customer GetCustomerById(int id);
+
+        bool SaveAccount(Account account);
+        bool SaveCustomer(Customer customer);
     }
 }

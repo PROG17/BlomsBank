@@ -23,6 +23,8 @@ namespace AndreasBank.Models
         public int Id { get; set; }
         public decimal Balance { get; set; }
         public decimal Credit { get; set; }
+        public decimal ActualSum
+            => Balance + Credit;
         public Customer Owner { get; set; }
     }
 }
