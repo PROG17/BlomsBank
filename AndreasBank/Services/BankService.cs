@@ -45,10 +45,31 @@ namespace AndreasBank.Services
             return _bankRepository.SaveAccount(account);
         }
 
+        public bool Transfer(int fromAccountId, int toAccountId, decimal sum)
+        {
+            var fromAccount = _bankRepository.Accounts.FirstOrDefault(a => a.Id == fromAccountId);
+            if (fromAccount == null) throw new AccountNotFoundException("Det finns inget konto med angivet kontonummer.");
+
+            var toAccount = _bankRepository.Accounts.FirstOrDefault(a => a.Id == toAccountId);
+            if (toAccount == null) throw new AccountNotFoundException("Det finns inget konto med angivet kontonummer.");
+
+            if (sum > fromAccount.Balance) return false;
+            toAccount.Balance += sum;
+            fromAccount.Balance -= sum;
+
+            _bankRepository.SaveAccount(fromAccount);
+            _bankRepository.SaveAccount(toAccount);
+
+            return true;
+        }
+
+
         public Account GetAccountById(int id)
         {
             return _bankRepository.GetAccountById(id);
         }
+
+        
 
         public Customer GetCustomerById(int id)
         {

@@ -8,5 +8,7 @@ namespace AndreasBank.Services
         bool Withdraw(int accountId, decimal sum);
         Account GetAccountById(int id);
         Customer GetCustomerById(int id);
+
+        bool Transfer(int fromAccountId, int toAccountId, decimal sum);
     }
 }
