@@ -53,7 +53,7 @@ namespace AndreasBank.Services
             var toAccount = _bankRepository.Accounts.FirstOrDefault(a => a.Id == toAccountId);
             if (toAccount == null) throw new AccountNotFoundException("Det finns inget konto med angivet kontonummer.");
 
-            if (sum > fromAccount.Balance) return false;
+            if (sum > fromAccount.ActualSum) return false;
             toAccount.Balance += sum;
             fromAccount.Balance -= sum;
 
