@@ -2,6 +2,7 @@ using AndreasBank.Exceptions;
 using AndreasBank.Repositories;
 using AndreasBank.Services;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace AndreasBankUnitTest
@@ -93,6 +94,48 @@ namespace AndreasBankUnitTest
 
             //Assert
             Assert.Throws<NonPositiveValueException>(withdraw);
+        }
+
+        [Fact]
+        public void Account_Shows_Correct_Balance_After_Transfer()
+        {
+            //Arrange
+            var bankRepository = new BankRepository();
+            var bankService = new BankService(bankRepository);
+
+            var fromAccount = bankRepository.Accounts.First();
+            var toAccount = bankRepository.Accounts.Last();
+            decimal balanceToTransfer = fromAccount.Balance - 1;
+            decimal toAccountBalanceBefore = toAccount.Balance;
+
+            //Act
+            bankService.Transfer(fromAccount.Id, toAccount.Id, balanceToTransfer);
+
+            //Assert
+            Assert.Equal(1, fromAccount.Balance);
+            Assert.Equal(toAccountBalanceBefore + balanceToTransfer, toAccount.Balance);
+        }
+
+        [Fact]
+        public void Should_Not_Allow_Transfer_When_Not_Not_Enough_Money()
+        {
+            //Arrange
+            var bankRepository = new BankRepository();
+            var bankService = new BankService(bankRepository);
+
+            var fromAccount = bankRepository.Accounts.First();
+            var toAccount = bankRepository.Accounts.Last();
+            decimal balanceToTransfer = fromAccount.Balance + 1;
+            decimal fromAccountBalanceBefore = fromAccount.Balance;
+            decimal toAccountBalanceBefore = toAccount.Balance;
+
+            //Act
+            var result = bankService.Transfer(fromAccount.Id, toAccount.Id, balanceToTransfer);
+
+            //Assert
+            Assert.False(result);
+            Assert.Equal(fromAccountBalanceBefore, fromAccount.Balance);
+            Assert.Equal(toAccountBalanceBefore, toAccount.Balance);
         }
     }
 }

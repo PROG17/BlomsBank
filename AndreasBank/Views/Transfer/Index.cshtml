@@ -1,0 +1,48 @@
+﻿@model TransferViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<form method="post">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <div class="form-group">
+                <label asp-for="FromAccountId"></label>
+                <input class="form-control" asp-for="FromAccountId" />
+                <span class="text-danger" asp-validation-for="FromAccountId"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToAccountId"></label>
+                <input class="form-control" asp-for="ToAccountId" />
+                <span class="text-danger" asp-validation-for="ToAccountId"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount"></label>
+                <input class="form-control" asp-for="Amount" />
+                <span class="text-danger" asp-validation-for="Amount"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FromActualSumString"></label>
+                <input asp-for="FromActualSumString" id="input-actual-sum" type="hidden" value="@Model.FromActualSumString" />
+                <p id="actual-sum" class="form-control form-control-static">@Model.FromActualSumString</p>
+                <span id="actual-sum-validation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToActualSumString"></label>
+                <input asp-for="ToActualSumString" id="input-actual-sum" type="hidden" value="@Model.ToActualSumString" />
+                <p id="actual-sum" class="form-control form-control-static">@Model.ToActualSumString</p>
+                <span id="actual-sum-validation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Överföring" formaction="/transfer/transfer" />
+            </div>
+            @*<div class="form-group">
+            <label asp-for="ResultSumString"></label>
+            <p id="result-sum" class="form-control form-control-static">@Model.ResultSumString</p>
+        </div>*@
+        </div>
+    </div>
+</form>
+
